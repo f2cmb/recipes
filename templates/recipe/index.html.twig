@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recettes{% endblock %}
+
+{% block body %}
+
+    <h1>Bienvenue sur la page des recettes !</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recipe in recipes %}
+                <tr>
+                    <td>{{ recipe.title }} - <small>{{ recipe.duration }} min.</small> - <small> {{ recipe.regime.getLabel }}</small> </td>
+                    <td>
+                        <a href="{{ path('recipe.show', { 'slug': recipe.slug, 'id': recipe.id }) }}" class="btn btn-info">Voir</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('recipe.edit', { 'id': recipe.id }) }}" class="btn btn-warning">Éditer</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="4">Aucune recette trouvée.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recette {{ recipe.title }}{% endblock %}
+
+{% block body %}
+    <h1>{{ recipe.title }}</h1>
+
+    <div class="wrapper-recipe w-75 m-auto">
+        <p>Publié le {{ recipe.createdAt|date('d/m/Y') }}</p>
+        <p>{{ recipe.content|nl2br }}</p>
+        <p>Modifiée le {{ recipe.updatedAt|date('d/m/Y') }}</p>
+        <p>Durée : {{ recipe.duration }} minutes</p>
+    </div>
+
+{% endblock %}
