@@ -17,7 +17,7 @@ final class RecipeController extends AbstractController
     #[Route('/recettes', name: 'recipe.index')]
     public function index(Request $request, RecipeRepository $repository, EntityManagerInterface $manager): Response
     {
-        $recipes = $repository->findWithDurationLowerThan($duration = 40);
+        $recipes = $repository->findWithDurationLowerThan($duration = 60);
 
         // $recipe =new Recipe();
         // $recipe->setTitle('Cerveau humain')
@@ -65,6 +65,7 @@ final class RecipeController extends AbstractController
             $this->addFlash('success', 'Recette mise à jour avec succès !');
             return $this->redirectToRoute('recipe.index');
         }
+         
         return $this->render('recipe/edit.html.twig', [
             'recipe' => $recipe,
             'form' => $form
@@ -79,7 +80,6 @@ final class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $recipe->setCreatedAt(new \DateTimeImmutable());
             $recipe->setUpdatedAt(new \DateTimeImmutable());
             $manager->persist($recipe);

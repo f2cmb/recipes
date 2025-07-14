@@ -33,6 +33,8 @@ class RecipeType extends AbstractType
             ])
             ->add('slug', HiddenType::class)
             ->addEventListener(FormEvents::PRE_SUBMIT, $this->autoSlug(...))
+            ->addEventListener(FormEvents::POST_SUBMIT, $this->attachTimestamps(...))
+
         ;
     }
 
@@ -41,9 +43,22 @@ class RecipeType extends AbstractType
         $data = $event->getData();
         if (isset($data['title'])) {
             $slugger = new AsciiSlugger();
-            $slug = $slugger->slug($data['title'])->lower()->toString();
+            $slug = strtolower($slugger->slug($data['title']));
             $data['slug'] = $slug;
             $event->setData($data);
+        }
+    }
+
+    public function attachTimestamps(FormEvent $event): void
+    {
+        $data = $event->getData();
+        if (!($data instanceof Recipe)) {
+           return;
+        }
+
+        $data->setUpdatedAt(new \DateTimeImmutable());
+        if (!($data->getId())) {
+            $data->setCreatedAt(new \DateTimeImmutable());
         }
     }
 

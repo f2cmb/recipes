@@ -6,6 +6,8 @@
 
     <h1>Bienvenue sur la page des recettes !</h1>
 
+    <a href="{{ path('recipe.create') }}" class="btn btn-success">Créer une recette</a>
+
     <table class="table">
         <thead>
             <tr>
@@ -23,8 +25,8 @@
                     <td>
                         <div class="d-flex gap-2">
                             <a href="{{ path('recipe.edit', { 'id': recipe.id }) }}" class="btn btn-warning">Éditer</a>
-                            <form acction="{{ path('recipe.delete', { 'id': recipe.id }) }}" method="post" style="display:inline;">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ recipe.id) }}">
+                            <form action="{{ path('recipe.delete', { 'id': recipe.id }) }}" method="post" style="display:inline;">
+                                <input type="hidden" name="_method" value="DELETE">
                                 <button type="submit" class="btn btn-danger">Supprimer</button>
                             </form>
                         </div>
