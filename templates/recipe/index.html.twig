@@ -21,8 +21,15 @@
                         <a href="{{ path('recipe.show', { 'slug': recipe.slug, 'id': recipe.id }) }}" class="btn btn-info">Voir</a>
                     </td>
                     <td>
-                        <a href="{{ path('recipe.edit', { 'id': recipe.id }) }}" class="btn btn-warning">Éditer</a>
+                        <div class="d-flex gap-2">
+                            <a href="{{ path('recipe.edit', { 'id': recipe.id }) }}" class="btn btn-warning">Éditer</a>
+                            <form acction="{{ path('recipe.delete', { 'id': recipe.id }) }}" method="post" style="display:inline;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ recipe.id) }}">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </div>
                     </td>
+                    
                 </tr>
             {% else %}
                 <tr><td colspan="4">Aucune recette trouvée.</td></tr>

@@ -11,6 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use App\Entity\Recipe;
 use App\Enum\RecipeRegime;
 
@@ -29,7 +32,19 @@ class RecipeType extends AbstractType
                 'choice_label' => fn (RecipeRegime $regime) => $regime->getLabel(),
             ])
             ->add('slug', HiddenType::class)
+            ->addEventListener(FormEvents::PRE_SUBMIT, $this->autoSlug(...))
         ;
+    }
+
+    public function autoSlug(FormEvent $event): void
+    {
+        $data = $event->getData();
+        if (isset($data['title'])) {
+            $slugger = new AsciiSlugger();
+            $slug = $slugger->slug($data['title'])->lower()->toString();
+            $data['slug'] = $slug;
+            $event->setData($data);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

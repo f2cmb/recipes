@@ -79,12 +79,7 @@ final class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $slug = strtolower($recipe->getTitle());
-            $slug = iconv('UTF-8', 'ASCII//TRANSLIT', $slug); // retire les accents
-            $slug = preg_replace('/[^a-z0-9 ]/', '', $slug);   // retire les caractères spéciaux
-            $slug = preg_replace('/\s+/', '-', $slug);         // remplace les espaces par des tirets
-            $recipe->setSlug($slug);
-            
+
             $recipe->setCreatedAt(new \DateTimeImmutable())
                 ->setUpdatedAt(new \DateTimeImmutable());
             $manager->persist($recipe);
@@ -96,5 +91,14 @@ final class RecipeController extends AbstractController
         return $this->render('recipe/create.html.twig', [
             'form' => $form
         ]);
+    }
+
+    #[Route('/recettes/{id}/delete', name: 'recipe.delete',  methods: ['DELETE'])]
+    public function delete(Recipe $recipe, EntityManagerInterface $manager): Response
+    {
+        $manager->remove($recipe);
+        $manager->flush();
+        $this->addFlash('success', 'Recette supprimée avec succès !');
+        return $this->redirectToRoute('recipe.index');
     }
 }
