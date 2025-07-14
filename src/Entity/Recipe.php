@@ -6,8 +6,12 @@ use App\Repository\RecipeRepository;
 use App\Enum\RecipeRegime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Validator\BanWord;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
+#[UniqueEntity('title', message: 'Une recette avec ce titre existe déjà.')]
 class Recipe
 {
     #[ORM\Id]
@@ -16,12 +20,16 @@ class Recipe
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 4, max: 255)]
+    #[BanWord]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    //control is managed by the form as it is a hidden field
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(min: 4)]
     private ?string $content = null;
 
     #[ORM\Column]
@@ -31,6 +39,9 @@ class Recipe
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank()]
+    #[Assert\Positive()]
+    #[Assert\LessThan(value: 240, message: 'La durée doit être inférieure à 240 minutes.')]
     private ?int $duration = null;
 
     #[ORM\Column(length: 255)]
