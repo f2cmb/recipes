@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
@@ -14,6 +15,7 @@ class Category
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[UniqueEntity('title', message: 'Une catégorie avec ce titre existe déjà.')]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
