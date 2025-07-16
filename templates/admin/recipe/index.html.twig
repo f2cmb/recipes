@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin.html.twig' %}
 
 {% block title %}Recettes{% endblock %}
 
@@ -6,7 +6,7 @@
 
     <h1>Bienvenue sur la page des recettes !</h1>
 
-    <a href="{{ path('recipe.create') }}" class="btn btn-success">Créer une recette</a>
+    <a href="{{ path('admin.recipe.create') }}" class="btn btn-success">Créer une recette</a>
 
     <table class="table">
         <thead>
@@ -20,12 +20,12 @@
                 <tr>
                     <td>{{ recipe.title }} - <small>{{ recipe.duration }} min.</small> - <small> {{ recipe.regime.getLabel }}</small> </td>
                     <td>
-                        <a href="{{ path('recipe.show', { 'slug': recipe.slug, 'id': recipe.id }) }}" class="btn btn-info">Voir</a>
+                        <a href="{{ path('admin.recipe.edit', { 'slug': recipe.slug, 'id': recipe.id }) }}" class="btn btn-info">Voir</a>
                     </td>
                     <td>
                         <div class="d-flex gap-2">
                             <a href="{{ path('recipe.edit', { 'id': recipe.id }) }}" class="btn btn-warning">Éditer</a>
-                            <form action="{{ path('recipe.delete', { 'id': recipe.id }) }}" method="post" style="display:inline;">
+                            <form action="{{ path('admin.recipe.delete', { 'id': recipe.id }) }}" method="post" style="display:inline;">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button type="submit" class="btn btn-danger">Supprimer</button>
                             </form>

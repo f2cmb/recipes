@@ -42,6 +42,9 @@ class RecipeType extends AbstractType
                     ]),
                 ],
             ])
+             ->add('save', SubmitType::Class, [
+                'label' => 'Enregistrer'
+            ])
             ->addEventListener(FormEvents::PRE_SUBMIT, $this->autoSlug(...))
             ->addEventListener(FormEvents::POST_SUBMIT, $this->attachTimestamps(...))
 
