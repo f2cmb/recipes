@@ -18,6 +18,12 @@ use App\Entity\Category;
 
 class CategoryType extends AbstractType
 {
+
+    public function __construct(private FormListenerFactory $listenerFactory)
+    {
+
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -35,37 +41,8 @@ class CategoryType extends AbstractType
             ->add('save', SubmitType::Class, [
                 'label' => 'Enregistrer'
             ])
-            ->addEventListener(FormEvents::PRE_SUBMIT, $this->autoSlug(...))
-            ->addEventListener(FormEvents::POST_SUBMIT, $this->attachTimestamps(...))
+            ->addEventListener(FormEvents::PRE_SUBMIT, $this->listenerFactory->autoSlug('name'))
+            ->addEventListener(FormEvents::POST_SUBMIT, $this->listenerFactory->timeStamps())
         ;
-    }
-
-    public function autoSlug(FormEvent $event): void
-    {
-        $data = $event->getData();
-        if (isset($data['name'])) {
-            $slugger = new AsciiSlugger();
-            $slug = strtolower($slugger->slug($data['name']));
-            $data['slug'] = $slug;
-            $event->setData($data);
-        }
-    }
-
-    public function attachTimestamps(FormEvent $event): void
-    {
-        $data = $event->getData();
-        if (!($data instanceof Category)) {
-           return;
-        }
-
-        $data->setCreatedAt(new \DateTimeImmutable());
-        
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => Category::class,
-        ]);
     }
 }
