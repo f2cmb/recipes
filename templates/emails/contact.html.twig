@@ -1,0 +1,12 @@
+{# templates/emails/contact.html.twig #}
+<h1>Welcome {{ data.name }}!</h1>
+
+<p>
+    Le mail {{ data.email }} à envoyé un email au sujet de {{ data.subject }}
+</p>
+<p>
+    Le message est pour {{ data.service }}
+</p>
+<p>
+    {{ data.message | nl2br }}
+</p>

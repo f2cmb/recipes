@@ -1,0 +1,1 @@
+Ce projet utilise Symfony en version 7.3, un framework PHP. Respecte les conventions Symfony et utilise les composants du framework pour générer du code.

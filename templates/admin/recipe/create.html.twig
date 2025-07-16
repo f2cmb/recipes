@@ -1,0 +1,21 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title %}Créer nouvelle recette{% endblock %}
+
+{% block body %}
+    <h1>Créer nouvelle recette</h1>
+     
+    <div class="form-wrapper">
+      
+        {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.content) }}
+        {{ form_row(form.duration) }}
+        {{ form_row(form.regime) }}
+        {{ form_row(form.save) }}
+        {{ form_end(form) }}
+
+
+    </div>
+
+{% endblock %}

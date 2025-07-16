@@ -1,0 +1,40 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title %}Recettes{% endblock %}
+
+{% block body %}
+
+    <h1>Bienvenue sur la page des recettes !</h1>
+
+    <a href="{{ path('admin.recipe.create') }}" class="btn btn-success">Créer une recette</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recipe in recipes %}
+                <tr>
+                    <td>{{ recipe.title }} - <small>{{ recipe.duration }} min.</small> - <small> {{ recipe.regime.getLabel }}</small> </td>
+                
+                    <td>
+                        <div class="d-flex gap-2">
+                            <a href="{{ path('admin.recipe.edit', { 'id': recipe.id }) }}" class="btn btn-warning">Éditer</a>
+                            <form action="{{ path('admin.recipe.delete', { 'id': recipe.id }) }}" method="post" style="display:inline;">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </div>
+                    </td>
+                    
+                </tr>
+            {% else %}
+                <tr><td colspan="4">Aucune recette trouvée.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

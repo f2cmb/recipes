@@ -1,0 +1,20 @@
+symfony server:start
+symfony server:stop
+
+# Démarrer MySQL
+brew services start mysql
+
+# Arrêter MySQL
+brew services stop mysql
+
+# Redémarrer MySQL
+brew services restart mysql
+
+# Voir l'état des services
+brew services list
+
+# Sécuriser l'installation (optionnel mais recommandé)
+mysql_secure_installation
+
+# Se connecter en root
+mysql -u root -p
