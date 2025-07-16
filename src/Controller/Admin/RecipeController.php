@@ -62,8 +62,8 @@ final class RecipeController extends AbstractController
         }
          
         return $this->render('admin/recipe/edit.html.twig', [
-            'recipe' => $recipe,
-            'form' => $form
+            'recipe'    => $recipe,
+            'form'      => $form
         ]);
     }
 

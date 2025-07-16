@@ -19,18 +19,6 @@ final class RecipeController extends AbstractController
     {
         $recipes = $repository->findWithDurationLowerThan($duration = 60);
 
-        // $recipe =new Recipe();
-        // $recipe->setTitle('Cerveau humain')
-        //     ->setContent('Uniquement pour les zombies, tâcher de surprendre un humaine car vous êtes un zombie et que nous n\avancez pas très vite et êtes con comme une chaise')
-        //     ->setDuration(12)
-        //     ->setCreatedAt(new \DateTimeImmutable())
-        //     ->setUpdatedAt(new \DateTimeImmutable())
-        //     ->setSlug('barbe-a-papa')
-        //     ->setRegime(RecipeRegime::OMNI);
-
-        //     $manager->persist($recipe);
-        //     $manager->flush();
-
        return $this->render('recipe/index.html.twig', [
             'recipes' => $recipes
         ]);

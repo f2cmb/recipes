@@ -1,0 +1,18 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title %}Créer nouvelle catégorie{% endblock %}
+
+{% block body %}
+    <h1>Créer nouvelle catégorie</h1>
+     
+    <div class="form-wrapper">
+      
+        {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.save) }}
+        {{ form_end(form) }}
+
+
+    </div>
+
+{% endblock %}
