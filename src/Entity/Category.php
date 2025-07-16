@@ -7,6 +7,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[UniqueEntity('name', message: 'Une catégorie avec ce titre existe déjà.')]
 class Category
 {
     #[ORM\Id]
@@ -15,7 +16,6 @@ class Category
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[UniqueEntity('title', message: 'Une catégorie avec ce titre existe déjà.')]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
@@ -23,6 +23,9 @@ class Category
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -61,6 +64,18 @@ class Category
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+    
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

@@ -21,6 +21,12 @@ use App\Enum\RecipeRegime;
 
 class RecipeType extends AbstractType
 {
+
+    public function __construct(private FormListenerFactory $listenerFactory)
+    {
+
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -46,34 +52,10 @@ class RecipeType extends AbstractType
              ->add('save', SubmitType::Class, [
                 'label' => 'Enregistrer'
             ])
-            ->addEventListener(FormEvents::PRE_SUBMIT, $this->autoSlug(...))
-            ->addEventListener(FormEvents::POST_SUBMIT, $this->attachTimestamps(...))
+            ->addEventListener(FormEvents::PRE_SUBMIT, $this->listenerFactory->autoSlug('title'))
+            ->addEventListener(FormEvents::POST_SUBMIT, $this->listenerFactory->timeStamps())
 
         ;
-    }
-
-    public function autoSlug(FormEvent $event): void
-    {
-        $data = $event->getData();
-        if (isset($data['title'])) {
-            $slugger = new AsciiSlugger();
-            $slug = strtolower($slugger->slug($data['title']));
-            $data['slug'] = $slug;
-            $event->setData($data);
-        }
-    }
-
-    public function attachTimestamps(FormEvent $event): void
-    {
-        $data = $event->getData();
-        if (!($data instanceof Recipe)) {
-           return;
-        }
-
-        $data->setUpdatedAt(new \DateTimeImmutable());
-        if (!($data->getId())) {
-            $data->setCreatedAt(new \DateTimeImmutable());
-        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
