@@ -47,7 +47,8 @@ class Recipe
     #[ORM\Column(length: 255)]
     private ?RecipeRegime $regime = null;
 
-    #[ORM\ManyToOne(inversedBy: 'recipes')]
+    #[ORM\ManyToOne(inversedBy: 'recipes', cascade: ['persist'])]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private ?Category $category = null;
 
     public function getId(): ?int
