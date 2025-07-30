@@ -3,26 +3,19 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\Category;
-
+use App\Entity\Recipe;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class CategoryType extends AbstractType
 {
 
-    public function __construct(private FormListenerFactory $listenerFactory)
-    {
-
-    }
+    public function __construct(private FormListenerFactory $listenerFactory) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -38,7 +31,7 @@ class CategoryType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('save', SubmitType::Class, [
+            ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer'
             ])
             ->addEventListener(FormEvents::PRE_SUBMIT, $this->listenerFactory->autoSlug('name'))

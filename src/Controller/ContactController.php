@@ -10,6 +10,8 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use App\DTO\ContactDTO;
 use App\Form\ContactType;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+
 
 final class ContactController extends AbstractController
 {
@@ -42,11 +44,10 @@ final class ContactController extends AbstractController
                 return $this->redirectToRoute('contact');
             } catch (TransportExceptionInterface $e) {
                 $this->addFlash('danger', 'E-mail non-envoyé !');
-
             }
         }
 
-        return $this->render('contact/contact.html.twig', [ 
+        return $this->render('contact/contact.html.twig', [
             'form' => $form
         ]);
     }

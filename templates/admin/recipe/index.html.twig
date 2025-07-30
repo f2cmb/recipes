@@ -12,6 +12,7 @@
         <thead>
             <tr>
                 <th>Titre</th>
+                <th>Catégorie</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -19,7 +20,7 @@
             {% for recipe in recipes %}
                 <tr>
                     <td>{{ recipe.title }} - <small>{{ recipe.duration }} min.</small> - <small> {{ recipe.regime.getLabel }}</small> </td>
-                
+                    <td>{{ recipe.category.name | default }}</td>
                     <td>
                         <div class="d-flex gap-2">
                             <a href="{{ path('admin.recipe.edit', { 'id': recipe.id }) }}" class="btn btn-warning">Éditer</a>
