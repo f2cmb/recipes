@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\RecipeRepository;
 use App\Entity\Recipe;
 use App\Form\RecipeType;
-use App\Enum\RecipeRegime;
+
 
 #[Route('/admin/recettes', name: 'admin.recipe.')]
 final class RecipeController extends AbstractController
@@ -21,7 +21,7 @@ final class RecipeController extends AbstractController
     {
         $recipes = $repository->findWithDurationLowerThan($duration = 60);
 
-       return $this->render('admin/recipe/index.html.twig', [
+        return $this->render('admin/recipe/index.html.twig', [
             'recipes' => $recipes
         ]);
     }
@@ -54,13 +54,23 @@ final class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $recipe->setUpdatedAt(new \DateTimeImmutable());
+
+            /** @var UploadedFile $file */
+            $file = $form->get('thumbnailFile')->getData();
+            $filename = $recipe->getId() . '.' . $file->getClientOriginalExtension();
+            $file->move(
+                $this->getParameter('kernel.project_dir') . '/public/recettes/images',
+                $filename
+            );
+            $recipe->setThumbnail($filename);
             $manager->persist($recipe);
             $manager->flush();
             $this->addFlash('success', 'Recette mise à jour avec succès !');
             return $this->redirectToRoute('admin.recipe.index');
         }
-         
+
         return $this->render('admin/recipe/edit.html.twig', [
             'recipe'    => $recipe,
             'form'      => $form

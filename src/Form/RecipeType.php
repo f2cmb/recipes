@@ -9,10 +9,12 @@ use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Image;
 use App\Entity\Recipe;
 use App\Enum\RecipeRegime;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -33,6 +35,12 @@ class RecipeType extends AbstractType
             ->add('content', TextareaType::class, [
                 'empty_data' => '',
                 'attr' => ['rows' => 5]
+            ])
+            ->add('thumbnailFile', FileType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new Image()
+                ]
             ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,

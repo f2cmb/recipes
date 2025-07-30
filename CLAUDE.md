@@ -2,6 +2,22 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Urls
+- `https://localhost:8000/` -
+- `https://localhost:8000/adminer` - -
+
+# Démarrer MySQL
+- `brew services start mysql`
+
+# Arrêter MySQL
+- `brew services stop mysql`
+
+# Redémarrer MySQL
+- `brew services restart mysql`
+
+# Se connecter en root
+- `mysql -u root -p`
+
 ## Development Commands
 
 ### Server Management
@@ -13,6 +29,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `php bin/console doctrine:fixtures:load` - Load database fixtures (includes Foundry factories)
 - `php bin/console doctrine:database:create` - Create the database
 - `php bin/console doctrine:schema:update --force` - Update database schema
+
 
 ### Testing
 - `php bin/phpunit` - Run all tests
