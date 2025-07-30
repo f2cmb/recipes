@@ -9,8 +9,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\Recipe;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class CategoryType extends AbstractType
 {
