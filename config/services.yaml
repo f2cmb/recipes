@@ -20,5 +20,17 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    # Configuration de Glide pour le redimensionnement d'images
+    League\Glide\Server:
+        factory: ['League\Glide\ServerFactory', 'create']
+        arguments:
+            - source: '%kernel.project_dir%/public/images'
+              cache: '%kernel.project_dir%/var/cache/glide'
+              max_image_size: 4000000
+
+    App\Service\ImageResizerService:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

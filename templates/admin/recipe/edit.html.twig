@@ -5,9 +5,11 @@
 {% block body %}
     <h1>Éditer {{ recipe.title }}</h1>
      
+    {% if recipe.thumbnail %}
     <p>
-        <img src="{{ vich_uploader_asset(recipe, 'thumbnailFile') }}" alt="{{ recipe.title }}" />
+        <img src="{{ path('image_resize', {path: 'recipes/' ~ recipe.thumbnail, w: 300}) }}" alt="{{ recipe.title }}" />
     </p>
+    {% endif %}
 
     <div class="form-wrapper">
       
