@@ -49,7 +49,9 @@ final class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $recipe->setUpdatedAt(new \DateTimeImmutable());
+
             $manager->persist($recipe);
             $manager->flush();
             $this->addFlash('success', 'Recette mise à jour avec succès !');
